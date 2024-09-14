@@ -23,4 +23,31 @@ export type TSemesterRegistration = {
   domEvent: SyntheticEvent;
   item?: any;
 }
+export type TPreRequisiteCourse= {
+  course: string
+  isDeleted: boolean
+  _id: string
+}
+export type TCourses= {
+  code: number
+  createdAt: string
+  credits: number
+  isDeleted: boolean
+  preRequisiteCourses: TPreRequisiteCourse[]
+  prefix: string
+  title: string
+  updatedAt: string
+  __v: number
+  _id: string
+}
+
+
+
+export type TCourseTableData={
+  key:string;
+  title:string;
+  code:number;
+  credits:number
+  prefix:string
+}
   

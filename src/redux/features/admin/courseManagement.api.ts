@@ -1,4 +1,4 @@
-import { TSemesterRegistration } from "../../../types/courseManagement.type";
+import { TCourses, TSemesterRegistration } from "../../../types/courseManagement.type";
 import { TResponse } from "../../../types/global.type";
 
 import { baseApi } from "../../api/baseApi";
@@ -44,10 +44,49 @@ const courseManagement = baseApi.injectEndpoints({
         }),
         invalidatesTags:['semesterRegistration']
       }),
-      
+      getAllCourses:builder.query({
+        query: (args) => {
+          const params = new URLSearchParams();
+          if (args) {
+            args?.forEach(({ name, value }: { name: string; value: string }) =>
+              params.append(name, value)
+            );
+          }
+          return {
+            url: "/courses",
+            method: "GET",
+            params,
+          };
+        },
+        transformResponse: (response: TResponse<TCourses[]>) => {
+          return {
+            data: response.data,
+            meta: response.meta,
+          };
+        },
+        providesTags:['courses']
+        
+      }),
+      addCourses:builder.mutation({
+        query: (data) => ({
+          url: "/courses/create-course",
+          method: "POST",
+          body: data,
+        }),
+        invalidatesTags:['courses']
+      }),
+    
+      assignFaculties:builder.mutation({
+        query: (args) => ({
+          url:`/courses/${args.courseId}/assign-faculties`,
+          method: "PUT",
+          body:args.facultiesId,
+        }),
+        invalidatesTags:["assignFaculties"]
+      }),
     
   }),
   
 });
 
-export const {useAddSemsterRegistrationMutation,useGetAllRegisteredSemisterQuery,useUpdateSemsterRegistrationMutation}=courseManagement
+export const {useAddSemsterRegistrationMutation,useGetAllRegisteredSemisterQuery,useUpdateSemsterRegistrationMutation,useGetAllCoursesQuery,useAddCoursesMutation,useAssignFacultiesMutation}=courseManagement

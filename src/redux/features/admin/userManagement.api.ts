@@ -32,6 +32,27 @@ const userManagement = baseApi.injectEndpoints({
         };
       },
     }),
+    getAllFaculties: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args?.forEach(({ name, value }: { name: string; value: string }) =>
+            params.append(name, value)
+          );
+        }
+        return {
+          url: "/faculties",
+          method: "GET",
+          params,
+        };
+      },
+      transformResponse: (response: TResponse<TStudent[]>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+    }),
   }),
 });
-export const { useAddStudentMutation, useGetAllStudentQuery } = userManagement;
+export const { useAddStudentMutation, useGetAllStudentQuery,useGetAllFacultiesQuery } = userManagement;
