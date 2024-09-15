@@ -44,6 +44,14 @@ const courseManagement = baseApi.injectEndpoints({
         }),
         invalidatesTags:['semesterRegistration']
       }),
+      addCourses:builder.mutation({
+        query: (data) => ({
+          url: "/courses/create-course",
+          method: "POST",
+          body: data,
+        }),
+        invalidatesTags:['courses']
+      }),
       getAllCourses:builder.query({
         query: (args) => {
           const params = new URLSearchParams();
@@ -64,17 +72,9 @@ const courseManagement = baseApi.injectEndpoints({
             meta: response.meta,
           };
         },
-        providesTags:['courses']
-        
+        providesTags:['courses'] 
       }),
-      addCourses:builder.mutation({
-        query: (data) => ({
-          url: "/courses/create-course",
-          method: "POST",
-          body: data,
-        }),
-        invalidatesTags:['courses']
-      }),
+      
     
       assignFaculties:builder.mutation({
         query: (args) => ({
@@ -84,9 +84,32 @@ const courseManagement = baseApi.injectEndpoints({
         }),
         invalidatesTags:["assignFaculties"]
       }),
+      getAllAsignFacultiesWithCourse:builder.query({
+        query: (id) => {
+          return {
+            url:`/courses/${id}/get-faculties`,
+            method:"GET",
+          };
+        },
+        transformResponse: (response: TResponse<any[]>) => {
+          return {
+            data: response.data,
+          };
+        },
+        providesTags:['assignFaculties']
+        
+      }),
+      addOfferCourses:builder.mutation({
+        query: (data) => ({
+          url: "/offered-courses/create-offered-course",
+          method: "POST",
+          body: data,
+        }),
+        // invalidatesTags:['courses']
+      }),
     
   }),
   
 });
 
-export const {useAddSemsterRegistrationMutation,useGetAllRegisteredSemisterQuery,useUpdateSemsterRegistrationMutation,useGetAllCoursesQuery,useAddCoursesMutation,useAssignFacultiesMutation}=courseManagement
+export const {useAddSemsterRegistrationMutation,useGetAllRegisteredSemisterQuery,useUpdateSemsterRegistrationMutation,useGetAllCoursesQuery,useAddCoursesMutation,useAssignFacultiesMutation,useGetAllAsignFacultiesWithCourseQuery,useAddOfferCoursesMutation}=courseManagement

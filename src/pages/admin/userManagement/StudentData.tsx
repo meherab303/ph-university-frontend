@@ -4,7 +4,6 @@ import {
   Space,
   Table,
   TableColumnsType,
-  TableProps,
 } from "antd";
 import { useState } from "react";
 import { TQueryParams } from "../../../types/global.type";
