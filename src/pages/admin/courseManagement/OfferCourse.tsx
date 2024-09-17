@@ -19,7 +19,7 @@ const OfferCourse = () => {
     const {data:departmentData}=useGetAllDepartmentQuery(undefined)
     const{data:acadmicFacultyData}=useGetAllFacultyQuery(undefined)
     const{data:courseData}=useGetAllCoursesQuery(undefined)
-    const {data:facultyUnderCourseData}=useGetAllAsignFacultiesWithCourseQuery(id)
+    const {data:facultyUnderCourseData,isFetching:isFacultyFetching}=useGetAllAsignFacultiesWithCourseQuery(id,{skip:!id})
     const[createOfferCourse]=useAddOfferCoursesMutation()
     const registeredSemesterOptions=registeredData?.data?.map((semester)=>({
         value:semester._id,
@@ -93,7 +93,7 @@ const OfferCourse = () => {
               <PHSelect  label="Faculty"
                 name="faculty"
                 options={facultyUnderCourseDataOptions}
-                disabled={!id}>
+                disabled={!id ||isFacultyFetching}>
                 </PHSelect>
                 <PHFormInput
                 type="text"

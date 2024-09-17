@@ -1,10 +1,11 @@
+
 import { ReactNode } from "react";
 export type TRoutes = {
   path: string;
   element: ReactNode;
 };
 export type TChildren = {
-  name: string;
+  name?: string;
   path: string;
   element: ReactNode;
 };
@@ -20,4 +21,5 @@ export type TSidebarItem =
       label: ReactNode;
       children?: TSidebarItem[];
     }
-  | undefined;
+  | undefined ;
+// export type TSidebarItem=ItemType<MenuItemType>[] | undefined
