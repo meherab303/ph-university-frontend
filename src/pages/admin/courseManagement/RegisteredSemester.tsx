@@ -129,7 +129,7 @@ const RegisteredSemester = () => {
             <Dropdown menu={menuProps}  trigger={['click']}>
             <Button onClick={()=>setSemesterId(item.key)}>
               <Space>
-                Button
+                Update
                 <DownOutlined />
               </Space>
             </Button>

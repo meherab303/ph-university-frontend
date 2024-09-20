@@ -37,6 +37,7 @@ const OfferCourse = () => {
         value:course._id,
         label:course.title
       }))
+      console.log(courseDataOptions)
     const facultyUnderCourseDataOptions=facultyUnderCourseData?.data?.faculties?.map((faculty)=>({
         value:faculty._id,
         label:faculty.fullName
@@ -51,10 +52,10 @@ const OfferCourse = () => {
             startTime:moment(new Date(data.startTime)).format('HH:mm'),
             endTime:moment(new Date(data.endTime)).format('HH:mm')
         }
-        createOfferCourse(offerCourseData)
         const toastId=toast.loading('loading...')
         try {
           const res = (await createOfferCourse(offerCourseData)) as TResponse<any>;
+          console.log(res,'offer')
           if (res?.error?.data?.message) {
             toast.error(res?.error?.data?.message, { id: toastId, duration: 2000 });
           } else {
