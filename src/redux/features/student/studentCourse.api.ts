@@ -1,5 +1,7 @@
 import { TResponse } from "../../../types/global.type";
-import { TTStudentOfferedCourse } from "../../../types/studentCourse.type";
+import { TMyEnrolledCourse } from "../../../types/MyEnrolledCourse.type";
+import { TMyOffereCourse } from "../../../types/Student.MyOfferedCourse.type";
+
 import { baseApi } from "../../api/baseApi";
 
 const studentCourseApi=baseApi.injectEndpoints({ endpoints: (builder) => ({
@@ -26,7 +28,29 @@ const studentCourseApi=baseApi.injectEndpoints({ endpoints: (builder) => ({
         };
       },
       providesTags:['offeredCourse'],
-      transformResponse: (response: TResponse<TTStudentOfferedCourse[]>) => {
+      transformResponse: (response: TResponse<TMyOffereCourse[]>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+    }),
+    getMyEnrolledCourse: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args?.forEach(({ name, value }: { name: string; value: string }) =>
+            params.append(name, value)
+          );
+        }
+        return {
+          url:"/enrolledCourse/my-enrolled-courses",
+          method: "GET",
+          params,
+        };
+      },
+      
+      transformResponse: (response: TResponse<TMyEnrolledCourse[]>) => {
         return {
           data: response.data,
           meta: response.meta,
@@ -34,4 +58,4 @@ const studentCourseApi=baseApi.injectEndpoints({ endpoints: (builder) => ({
       },
     }),
   }),})
-export const{useGetAllOfferedCoursesQuery,useEnrollCourseMutation} =studentCourseApi
+export const{useGetAllOfferedCoursesQuery,useEnrollCourseMutation,useGetMyEnrolledCourseQuery} =studentCourseApi

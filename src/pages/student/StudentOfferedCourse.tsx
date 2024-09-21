@@ -2,6 +2,7 @@
 import { Button, Card, Col, Row } from "antd";
 import { useEnrollCourseMutation, useGetAllOfferedCoursesQuery } from "../../redux/features/student/studentCourse.api";
 import { toast } from "sonner";
+import { TMyOffereCourse } from "../../types/Student.MyOfferedCourse.type";
 type TCourse={
   [index:string]:any
 }
@@ -49,7 +50,7 @@ toast.success('course enrolled',{id:toastId,duration:4000})
   return finalResult?.map((item,index)=>{
     return <>
     <Card key={index} style={{textAlign:'center'}} title={item.courseTitle}>
-    <Card.Grid style={gridStyle}>{item.sections.map((item)=>{
+    <Card.Grid style={gridStyle}>{item.sections.map((item:TMyOffereCourse)=>{
       return <>
      <Row key={item._id}>
      <Card.Grid style={gridStyle2}> <Col>section: {item.section}</Col></Card.Grid>
