@@ -3,21 +3,14 @@ import { TTStudentOfferedCourse } from "../../../types/studentCourse.type";
 import { baseApi } from "../../api/baseApi";
 
 const studentCourseApi=baseApi.injectEndpoints({ endpoints: (builder) => ({
-    // addStudent: builder.mutation({
-    //   query: (data) => ({
-    //     url: "users/create-student",
-    //     method: "POST",
-    //     body: data,
-    //   }),
-    // }),
-    // passWordChange: builder.mutation({
-    //   query: (data) => ({
-    //     url:"/auth/change-password",
-    //     method: "POST",
-    //     body: data,
-    //   }),
-    // }),
-    
+    enrollCourse: builder.mutation({
+      query: (data) => ({
+        url: "/enrolledCourse/create-enrolled-course",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags:['offeredCourse']
+    }),
     getAllOfferedCourses: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
@@ -32,6 +25,7 @@ const studentCourseApi=baseApi.injectEndpoints({ endpoints: (builder) => ({
           params,
         };
       },
+      providesTags:['offeredCourse'],
       transformResponse: (response: TResponse<TTStudentOfferedCourse[]>) => {
         return {
           data: response.data,
@@ -40,4 +34,4 @@ const studentCourseApi=baseApi.injectEndpoints({ endpoints: (builder) => ({
       },
     }),
   }),})
-export const{useGetAllOfferedCoursesQuery} =studentCourseApi
+export const{useGetAllOfferedCoursesQuery,useEnrollCourseMutation} =studentCourseApi

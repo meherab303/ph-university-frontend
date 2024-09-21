@@ -1,5 +1,5 @@
 const StudentDashBoard = () => {
-  return <div>Student dashboard</div>;
+  return <div className="text-3xl font-bold underline">Student dashboard</div>;
 };
 
 export default StudentDashBoard;

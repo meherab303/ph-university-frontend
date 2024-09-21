@@ -1,6 +1,7 @@
 
 import { Button, Card, Col, Row } from "antd";
-import { useGetAllOfferedCoursesQuery } from "../../redux/features/student/studentCourse.api";
+import { useEnrollCourseMutation, useGetAllOfferedCoursesQuery } from "../../redux/features/student/studentCourse.api";
+import { toast } from "sonner";
 type TCourse={
   [index:string]:any
 }
@@ -28,6 +29,7 @@ const gridStyle3: React.CSSProperties = {
 
 const StudentOfferedCourse = () => {
   const {data:offerCourseData}=useGetAllOfferedCoursesQuery(undefined)
+  const [createEnrollCourse]=useEnrollCourseMutation()
   const modifiedObject=offerCourseData?.data?.reduce((acc:TCourse,item)=>{
     const key=item.course.title
     acc[key]=acc[key] || {courseTitle:key,sections:[]}
@@ -35,7 +37,15 @@ const StudentOfferedCourse = () => {
     return acc
   },{})
   const finalResult=(Object.values(modifiedObject?modifiedObject:{}))
-  console.log(finalResult)
+ const handleSubmit=async(id:string)=>{
+const enrolldata={
+    offeredCourse:id
+  }
+
+ const toastId= toast.loading('course enrolling')
+await createEnrollCourse(enrolldata)
+toast.success('course enrolled',{id:toastId,duration:4000})
+ }
   return finalResult?.map((item,index)=>{
     return <>
     <Card key={index} style={{textAlign:'center'}} title={item.courseTitle}>
@@ -54,7 +64,7 @@ const StudentOfferedCourse = () => {
     </Row></>)
      })}</Col></Card.Grid>
      
-     <Card.Grid onClick={()=>console.log(item._id)}  style={gridStyle3}> <Button>Enroll</Button></Card.Grid>
+     <Card.Grid onClick={()=>handleSubmit(item._id)}  style={gridStyle3}> <Button>Enroll</Button></Card.Grid>
      </Row>
      
       </>
