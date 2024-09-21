@@ -42,10 +42,16 @@ const StudentOfferedCourse = () => {
 const enrolldata={
     offeredCourse:id
   }
+  
 
  const toastId= toast.loading('course enrolling')
 await createEnrollCourse(enrolldata)
 toast.success('course enrolled',{id:toastId,duration:4000})
+
+ }
+
+ if(!finalResult.length){
+  return <p>there is no available course</p>
  }
   return finalResult?.map((item,index)=>{
     return <>

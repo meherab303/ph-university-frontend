@@ -63,7 +63,7 @@ const Courses = () => {
   );
 };
 
-const AddFacultyModal=(item)=>{
+const AddFacultyModal=(item:Record<string,unknown>)=>{
     const {data:facultyData}=useGetAllFacultiesQuery(undefined)
     const [assignFaculties]=useAssignFacultiesMutation()
     const facultyOptions=facultyData?.data?.map((faculty)=>(
